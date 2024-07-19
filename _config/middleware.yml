@@ -1,0 +1,12 @@
+---
+Name: springtimesoft-csp-suite-middleware
+After:
+  - requestprocessors
+---
+
+# Register the Security Header middleware (no-op unless enabled via config)
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\Director:
+    properties:
+      Middlewares:
+        SecurityHeaderMiddleware: '%$Springtimesoft\CSPSuite\Middleware\SecurityHeaderMiddleware'

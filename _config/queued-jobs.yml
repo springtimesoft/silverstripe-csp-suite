@@ -1,0 +1,19 @@
+---
+Name: springtimesoft-csp-suite-queued-jobs
+---
+
+# Schedule regular cleanup of CSP violation reports
+SilverStripe\Core\Injector\Injector:
+  Symbiote\QueuedJobs\Services\QueuedJobService:
+    properties:
+      defaultJobs:
+        # CSP Violation truncation runs daily at 2:30am
+        CSPViolationCleanup:
+          type: 'Springtimesoft\CSPSuite\Jobs\CSPViolationCleanupJob'
+          filter:
+            JobTitle: 'CSP Violation Cleanup Job'
+          construct:
+            go: 'forth' # Dummy value to appease syntax validation
+          startDateFormat: 'Y-m-d H:i:s'
+          startTimeString: 'tomorrow 02:30'
+          recreate: 1

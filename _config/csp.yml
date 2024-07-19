@@ -1,0 +1,9 @@
+---
+Name: springtimesoft-csp-suite-csp
+---
+
+# Enable SRI and add default CMS-specific CSP
+Silverstripe\CSP\CSPMiddleware:
+  sri_enabled: true
+  policies:
+    cms: 'Silverstripe\CSP\Policies\CMS'

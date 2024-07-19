@@ -1,0 +1,8 @@
+---
+Name: springtimesoft-csp-suite-routes
+---
+
+# Bind CSP Violation report controller
+SilverStripe\Control\Director:
+  rules:
+    'csp-violations': 'Springtimesoft\CSPSuite\Controllers\CSPViolationsController'
