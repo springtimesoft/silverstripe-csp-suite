@@ -1,0 +1,8 @@
+---
+Name: springtimesoft-csp-suite-extensions
+---
+
+# Adds CSP mode to Settings area in CMS
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - Springtimesoft\CSPSuite\Extensions\CSPSiteConfigExtension
