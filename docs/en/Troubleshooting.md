@@ -6,14 +6,22 @@ Some browser extensions may operate in a way that violates your CSP configuratio
 failures, since they aren't under the website's control, but browsers have inconsistent behaviour on this front.
 
 This can result in CSP errors that reference code completely unrelated to your site, inducing immense confusion.
-You can validate the root cause by temporarily disabling all extensions in your browser and reloading.
+You can validate that this is the root cause by temporarily disabling all extensions in your browser and reloading.
 
 These failures can generally be ignored if they aren't impacting your site's actual scripts or styles.
 
 ## Violations not being reported
 
-- Ensure the CSP mode is set to report-only or enabled with reporting.
+Various conditions can result in reports failing to send:
+
+- The CSP mode must be set to report-only or enabled with reporting.
 - Chrome and other Chromium-based browsers do not send reports in non-HTTPS environments.
+- Report delivery will fail in environments protected by basic auth. In some cases browsers may not try again if basic auth is removed thereafter.
+- Some browsers delay the submission of reports by up to a minute in order to batch them.
+
+See also:
+
+- [Debug your reporting setup](https://developer.chrome.com/docs/capabilities/web-apis/reporting-api?utm_source=devtools#debug_your_reporting_setup)
 
 ## CSP failures in the CMS
 
