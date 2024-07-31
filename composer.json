@@ -21,6 +21,9 @@
         "silverstripe/standards": "^1",
         "phpstan/extension-installer": "^1.3"
     },
+    "conflict": {
+        "signify-nz/silverstripe-security-headers": "*"
+    },
     "suggest": {
         "symbiote/silverstripe-queuedjobs": "Required for regular cleanup of CSP violations."
     },
@@ -29,11 +32,6 @@
             "Springtimesoft\\CSPSuite\\": "src/",
             "Springtimesoft\\CSPSuite\\Tests\\": "tests/php/"
         }
-    },
-    "extra": {
-        "expose": [
-            "client/dist"
-        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true

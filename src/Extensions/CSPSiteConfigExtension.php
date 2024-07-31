@@ -25,7 +25,7 @@ class CSPSiteConfigExtension extends DataExtension implements PermissionProvider
     public const CSP_DISABLE = '3';
 
     private static $db = [
-        'CSPReportingOnly' => "Enum('0,2,1,3')",
+        'CSPReportingOnly' => "Enum('0,2,1,3', '1')",
     ];
 
     public function updateCMSFields(FieldList $fields)
