@@ -7,10 +7,15 @@ use Silverstripe\CSP\Fragments\GoogleTagManager as BaseGoogleTagManagerFragment;
 use Silverstripe\CSP\Policies\Policy;
 
 /**
- * https://developers.google.com/tag-manager/web/csp
+ * Added subclass to enable all Google regional domains to be whitelisted
+ * if whitelist_google_regional_domains set to true.
  */
 class GoogleTagManagerFragment extends BaseGoogleTagManagerFragment
 {
+    /**
+     * List of supported Google regional domains
+     * https://www.google.com/supported_domains
+     */
     public const GOOGLE_REGIONAL_DOMAINS = [
         '*.google.com',
         '*.google.ad',
@@ -213,11 +218,10 @@ class GoogleTagManagerFragment extends BaseGoogleTagManagerFragment
         self::adRemarketing($policy);
     }
 
-    /* Uses Google localised regional endpoint domains for their services
-    *  this will whitelist all local Google domains img-src and connect-src.
-    *
-    * https://www.google.com/supported_domains
-    */
+    /**
+     *  Uses Google localised regional endpoint domains for their services
+     *  this will whitelist all local Google domains img-src and connect-src.
+     */
     public static function undocumented(Policy $policy): void
     {
         $policy
@@ -234,9 +238,11 @@ class GoogleTagManagerFragment extends BaseGoogleTagManagerFragment
                 'https://*.doubleclick.net',
             ]);
 
-        // Google uses localised regional endpoint domains for their services
-        // if seeing regional google domain report violations
-        // setting this config will whitelist all img-src to allow 'https:'.
+        /* Google uses localised regional endpoint domains for their services
+        *  if seeing regional google domain report violations
+        *  setting this config will whitelist all supported domains (https://www.google.com/supported_domains)
+        *  for img-src and connect-src directives.
+        */
         if (true === self::config()->get('whitelist_google_regional_domains')) {
             $policy
                 ->addDirective(Directive::IMG, self::GOOGLE_REGIONAL_DOMAINS)
