@@ -24,6 +24,13 @@ class CSPDocumentCleanupJob extends AbstractQueuedJob
         $orphanedDocumentIDs    = CSPDocument::get()->filter('CSPViolations.Count()', 0)->column('ID');
         $orphanedDocumentIDList = implode(', ', $orphanedDocumentIDs);
 
+        if (empty($orphanedDocumentIDs)) {
+            $this->addMessage('No orphaned documents to delete.');
+            $this->isComplete = true;
+
+            return;
+        }
+
         $cspDocumentTable = DataObject::getSchema()->baseDataTable(CSPDocument::class);
         SQLDelete::create("\"{$cspDocumentTable}\"")->addWhere(sprintf('"ID" IN (%s)', $orphanedDocumentIDList))->execute();
 
