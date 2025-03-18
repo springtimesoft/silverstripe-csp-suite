@@ -24,7 +24,6 @@ solution combining the best elements of both.
 
 ```sh
 composer require springtimesoft/silverstripe-csp-suite
-composer require symbiote/silverstripe-queuedjobs # Optional but strongly recommended
 ```
 
 This module relies on Queued Jobs to perform regular cleanup tasks. Without a job runner configured, excessive records
