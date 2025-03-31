@@ -11,7 +11,7 @@ use Silverstripe\CSP\Policies\Policy;
  */
 class MailchimpFragment implements Fragment
 {
-    public const DOMAIN = '*.us3.list-manage.com';
+    public const DOMAIN = '*.list-manage.com';
 
     public static function addTo(Policy $policy): void
     {
