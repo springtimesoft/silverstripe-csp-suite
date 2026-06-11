@@ -7,3 +7,8 @@ Silverstripe\CSP\CSPMiddleware:
   sri_enabled: true
   policies:
     cms: 'Silverstripe\CSP\Policies\CMS'
+
+# Override Requirements Backend implementation with our patched version
+SilverStripe\Core\Injector\Injector:
+  Silverstripe\CSP\Requirements\CSPBackend:
+    class: Springtimesoft\CSPSuite\Requirements\CSPBackend

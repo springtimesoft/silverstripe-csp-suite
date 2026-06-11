@@ -219,6 +219,33 @@ class GoogleTagManagerFragment extends BaseGoogleTagManagerFragment
     }
 
     /**
+     * Covers some domain variants that aren't listed in the base fragment.
+     *
+     * @see https://developers.google.com/tag-platform/security/guides/csp
+     */
+    public static function analytics(Policy $policy): void
+    {
+        parent::analytics($policy);
+
+        $policy->addDirective(
+            Directive::CONNECT,
+            [
+                'https://*.google-analytics.com',
+                'https://*.analytics.google.com',
+                'https://*.googletagmanager.com',
+            ]
+        );
+
+        $policy->addDirective(
+            Directive::IMG,
+            [
+                'https://*.google-analytics.com',
+                'https://*.googletagmanager.com',
+            ]
+        );
+    }
+
+    /**
      *  Uses Google localised regional endpoint domains for their services
      *  this will whitelist all local Google domains img-src and connect-src.
      */
