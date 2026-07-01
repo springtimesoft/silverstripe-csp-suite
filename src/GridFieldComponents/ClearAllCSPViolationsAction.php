@@ -47,7 +47,7 @@ class ClearAllCSPViolationsAction extends AbstractGridFieldComponent implements 
         );
         $button->setForm($gridField->getForm());
 
-        $button->addExtraClass('font-icon-delete grid-delete-button btn btn-outline-danger');
+        $button->addExtraClass('font-icon-trash grid-delete-button btn btn-outline-danger');
 
         return [
             $this->targetFragment => $button->Field(),
