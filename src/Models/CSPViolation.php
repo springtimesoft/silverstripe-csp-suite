@@ -72,8 +72,8 @@ class CSPViolation extends DataObject
         $count = $this->Documents()->count();
         $documentURIs = $this->Documents()->limit($limit)->Column('URI');
         if ($count > $limit) {
-            $more = $count - $limit;
-            return DBField::create_field('Text', implode(', ', [...$documentURIs, "and {$more} more"]));
+            $more = _t(__CLASS__ . '.MORE', 'and {count} more', ['count' => $count - $limit]);
+            return DBField::create_field('Text', implode(', ', [...$documentURIs, $more]));
         }
 
         return DBField::create_field('Text', implode(', ', $documentURIs));
@@ -97,8 +97,8 @@ class CSPViolation extends DataObject
         $count = $this->UserAgents()->count();
         $userAgents = $this->UserAgents()->limit($limit)->Column('Name');
         if ($count > $limit) {
-            $more = $count - $limit;
-            return DBField::create_field('Text', implode(', ', [...$userAgents, "and {$more} more"]));
+            $more = _t(__CLASS__ . '.MORE', 'and {count} more', ['count' => $count - $limit]);
+            return DBField::create_field('Text', implode(', ', [...$userAgents, $more]));
         }
 
         return DBField::create_field('Text', implode(', ', $userAgents));
