@@ -69,7 +69,7 @@ class CSPViolation extends DataObject
     {
         $limit = self::config()->get('uri_summary_limit');
 
-        $count = $this->Documents()->count();
+        $count        = $this->Documents()->count();
         $documentURIs = $this->Documents()->limit($limit)->Column('URI');
         if ($count > $limit) {
             $more = _t(__CLASS__ . '.MORE', 'and {count} more', ['count' => $count - $limit]);
@@ -84,6 +84,14 @@ class CSPViolation extends DataObject
      */
     public function getUserAgentList(): DBField
     {
+        $userAgents = $this->UserAgents()->limit($limit)->Map('Name', 'Raw')->toArray();
+
+        $formatted = array_map(
+            fn (string $name, string $raw) => "{$name} ({$raw})",
+            array_keys($userAgents),
+            array_values($userAgents)
+        );
+
         return DBField::create_field('Text', implode(', ', $this->UserAgents()->Column('Name')));
     }
 
@@ -94,13 +102,20 @@ class CSPViolation extends DataObject
     {
         $limit = self::config()->get('user_agent_summary_limit');
 
-        $count = $this->UserAgents()->count();
-        $userAgents = $this->UserAgents()->limit($limit)->Column('Name');
+        $count      = $this->UserAgents()->count();
+        $userAgents = $this->UserAgents()->limit($limit)->Map('Name', 'Raw')->toArray();
+
+        $formattedUserAgents = array_map(
+            fn (string $name, string $raw) => "<span title=\"{$raw}\">{$name}</span>",
+            array_keys($userAgents),
+            array_values($userAgents)
+        );
+
         if ($count > $limit) {
             $more = _t(__CLASS__ . '.MORE', 'and {count} more', ['count' => $count - $limit]);
-            return DBField::create_field('Text', implode(', ', [...$userAgents, $more]));
+            return DBField::create_field('Text', implode(', ', [...$formattedUserAgents, $more]));
         }
 
-        return DBField::create_field('Text', implode(', ', $userAgents));
+        return DBField::create_field('HTMLVarchar', implode(', ', $formattedUserAgents));
     }
 }

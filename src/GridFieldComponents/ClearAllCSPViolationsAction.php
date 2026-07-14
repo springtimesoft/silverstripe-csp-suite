@@ -12,6 +12,7 @@ use SilverStripe\Forms\GridField\GridField_URLHandler;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\Queries\SQLDelete;
 use Springtimesoft\CSPSuite\Models\CSPDocument;
+use Springtimesoft\CSPSuite\Models\CSPUserAgent;
 use Springtimesoft\CSPSuite\Models\CSPViolation;
 
 /**
@@ -113,6 +114,13 @@ class ClearAllCSPViolationsAction extends AbstractGridFieldComponent implements 
 
         $cspDocumentTable = DataObject::getSchema()->baseDataTable(CSPDocument::class);
         SQLDelete::create("\"{$cspDocumentTable}\"")->execute();
+
+        $cspViolationUserAgentJoin      = DataObject::getSchema()->manyManyComponent(CSPViolation::class, 'UserAgents');
+        $cspViolationUserAgentJoinTable = $cspViolationUserAgentJoin['join'];
+        SQLDelete::create("\"{$cspViolationUserAgentJoinTable}\"")->execute();
+
+        $cspUserAgentTable = DataObject::getSchema()->baseDataTable(CSPUserAgent::class);
+        SQLDelete::create("\"{$cspUserAgentTable}\"")->execute();
 
         Controller::curr()->getResponse()
             ->setStatusCode(200)

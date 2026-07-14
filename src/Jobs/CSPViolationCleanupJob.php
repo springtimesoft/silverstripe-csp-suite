@@ -5,6 +5,8 @@ namespace Springtimesoft\CSPSuite\Jobs;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\Queries\SQLDelete;
+use SilverStripe\ORM\Queries\SQLSelect;
+use Springtimesoft\CSPSuite\Models\CSPUserAgent;
 use Springtimesoft\CSPSuite\Models\CSPViolation;
 use Symbiote\QueuedJobs\Services\AbstractQueuedJob;
 use Symbiote\QueuedJobs\Services\QueuedJobService;
@@ -78,6 +80,11 @@ class CSPViolationCleanupJob extends AbstractQueuedJob
         $cspViolationDocumentJoinTable = $cspViolationDocumentJoin['join'];
         SQLDelete::create("\"{$cspViolationDocumentJoinTable}\"")->addWhere(sprintf('"CSPViolationID" IN (%s)', $violationIDList))->execute();
 
+        // Also delete any join records for the violations
+        $cspViolationUserAgentJoin      = DataObject::getSchema()->manyManyComponent(CSPViolation::class, 'UserAgents');
+        $cspViolationUserAgentJoinTable = $cspViolationUserAgentJoin['join'];
+        SQLDelete::create("\"{$cspViolationUserAgentJoinTable}\"")->addWhere(sprintf('"CSPViolationID" IN (%s)', $violationIDList))->execute();
+
         // If we have more violations to delete, increment the step and continue
         if (count($allViolationsToDelete) > 0) {
             $this->violationsToDelete = $allViolationsToDelete;
@@ -88,7 +95,8 @@ class CSPViolationCleanupJob extends AbstractQueuedJob
 
         // Queue CSPDocumentCleanupJob to clean up any orphaned documents
         QueuedJobService::singleton()->queueJob(new CSPDocumentCleanupJob());
-        $this->addMessage('Clean up complete. Queued CSPDocumentCleanupJob.');
+        QueuedJobService::singleton()->queueJob(new CSPUserAgentCleanupJob());
+        $this->addMessage('CSP violation clean up complete. Queued clean up jobs for documents and user agents.');
 
         $this->isComplete = true;
     }
