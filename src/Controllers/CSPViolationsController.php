@@ -6,6 +6,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Convert;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\FieldType\DBField;
 use Springtimesoft\CSPSuite\Models\CSPDocument;
@@ -70,7 +71,7 @@ class CSPViolationsController extends Controller
                     $report = $reportWrapper['body'];
 
                     // 'age' is the number of milliseconds since the report was generated.
-                    $age = time() - ($reportWrapper['age'] / 1000);
+                    $age = DBDatetime::now()->getTimestamp() - ($reportWrapper['age'] / 1000);
 
                     $report[self::REPORT_TIME]      = DBField::create_field('Datetime', $age)->getValue();
                     $report[self::REPORT_DIRECTIVE] = 'report-to';
@@ -158,6 +159,9 @@ class CSPViolationsController extends Controller
     protected function setUserAgent(CSPViolation $violation)
     {
         $raw = $this->getRequest()->getHeader('User-Agent') ?? 'unknown';
+
+        // The raw value is rendered in the report output - ensure there are no unescaped HTML entities
+        $raw = Convert::raw2xml($raw);
 
         $dbEntry = CSPUserAgent::get()->filter('Raw', $raw)->first();
         if (!$dbEntry) {

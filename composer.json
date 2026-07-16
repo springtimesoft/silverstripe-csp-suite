@@ -12,6 +12,7 @@
         "php": "^8.1",
         "silverstripe/framework": "^5.2.12",
         "silverstripe/admin": "^2.2",
+        "silverstripe/cms": "^5.2",
         "silverstripe/reports": "^5.2",
         "silverstripeltd/silverstripe-csp": "^2.1",
         "symbiote/silverstripe-queuedjobs": "^5.2",

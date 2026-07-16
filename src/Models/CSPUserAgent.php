@@ -19,4 +19,8 @@ class CSPUserAgent extends DataObject
     private static $indexes = [
         'Raw' => ['type' => 'unique'],
     ];
+
+    private static $belongs_many_many = [
+        'CSPViolations' => CSPViolation::class,
+    ];
 }

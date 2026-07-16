@@ -84,7 +84,7 @@ class CSPViolation extends DataObject
      */
     public function getUserAgentList(): DBField
     {
-        $userAgents = $this->UserAgents()->limit($limit)->Map('Name', 'Raw')->toArray();
+        $userAgents = $this->UserAgents()->Map('Name', 'Raw')->toArray();
 
         $formatted = array_map(
             fn (string $name, string $raw) => "{$name} ({$raw})",
@@ -92,7 +92,7 @@ class CSPViolation extends DataObject
             array_values($userAgents)
         );
 
-        return DBField::create_field('Text', implode(', ', $this->UserAgents()->Column('Name')));
+        return DBField::create_field('Text', implode(', ', $formatted));
     }
 
     /**
@@ -113,7 +113,7 @@ class CSPViolation extends DataObject
 
         if ($count > $limit) {
             $more = _t(__CLASS__ . '.MORE', 'and {count} more', ['count' => $count - $limit]);
-            return DBField::create_field('Text', implode(', ', [...$formattedUserAgents, $more]));
+            return DBField::create_field('HTMLVarchar', implode(', ', [...$formattedUserAgents, $more]));
         }
 
         return DBField::create_field('HTMLVarchar', implode(', ', $formattedUserAgents));

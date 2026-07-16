@@ -4,6 +4,7 @@ namespace Springtimesoft\CSPSuite\Jobs;
 
 use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\Queries\SQLDelete;
 use SilverStripe\ORM\Queries\SQLSelect;
 use Springtimesoft\CSPSuite\Models\CSPUserAgent;
@@ -39,7 +40,7 @@ class CSPViolationCleanupJob extends AbstractQueuedJob
         $retention = Config::inst()->get(self::class, 'retention_period');
         $retention = new \DateInterval($retention);
 
-        $date = new \DateTime();
+        $date = new \DateTime(DBDatetime::now()->getValue());
         $date->sub($retention);
 
         $ageLimit = $date->format(\DateTime::ATOM);

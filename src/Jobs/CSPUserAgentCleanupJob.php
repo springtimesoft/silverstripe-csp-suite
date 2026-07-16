@@ -4,7 +4,7 @@ namespace Springtimesoft\CSPSuite\Jobs;
 
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\Queries\SQLDelete;
-use Springtimesoft\CSPSuite\Models\CSPDocument;
+use Springtimesoft\CSPSuite\Models\CSPUserAgent;
 use Symbiote\QueuedJobs\Services\AbstractQueuedJob;
 
 /**
