@@ -1,0 +1,28 @@
+Springtimesoft\CSPSuite\Models\CSPDocument:
+  doc1:
+    URI: /page-1/
+  doc2:
+    URI: /page-2/
+  doc3:
+    URI: /page-3/
+
+Springtimesoft\CSPSuite\Models\CSPUserAgent:
+  chrome:
+    Name: Chrome 126.0.0 (Windows 10)
+    Raw: chrome-raw-ua
+  firefox:
+    Name: Firefox 128.0 (Ubuntu)
+    Raw: firefox-raw-ua
+  safari:
+    Name: Safari 17.5 (Mac OS X 14.5)
+    Raw: safari-raw-ua
+
+Springtimesoft\CSPSuite\Models\CSPViolation:
+  violation1:
+    ReportedTime: '2026-07-01 10:00:00'
+    Disposition: enforce
+    BlockedURI: https://evil.example.com/bad.js
+    EffectiveDirective: script-src
+    Violations: 3
+    Documents: =>Springtimesoft\CSPSuite\Models\CSPDocument.doc1,=>Springtimesoft\CSPSuite\Models\CSPDocument.doc2,=>Springtimesoft\CSPSuite\Models\CSPDocument.doc3
+    UserAgents: =>Springtimesoft\CSPSuite\Models\CSPUserAgent.chrome,=>Springtimesoft\CSPSuite\Models\CSPUserAgent.firefox,=>Springtimesoft\CSPSuite\Models\CSPUserAgent.safari

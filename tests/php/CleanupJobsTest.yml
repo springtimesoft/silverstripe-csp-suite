@@ -1,0 +1,47 @@
+Springtimesoft\CSPSuite\Models\CSPDocument:
+  oldDoc:
+    URI: /old-page/
+  recentDoc:
+    URI: /recent-page/
+
+Springtimesoft\CSPSuite\Models\CSPUserAgent:
+  oldUA:
+    Name: Old Browser 1.0
+    Raw: old-raw-ua
+  recentUA:
+    Name: Recent Browser 2.0
+    Raw: recent-raw-ua
+
+Springtimesoft\CSPSuite\Models\CSPViolation:
+  old1:
+    ReportedTime: '2020-01-01 00:00:00'
+    Disposition: enforce
+    BlockedURI: https://evil.example.com/old-1.js
+    EffectiveDirective: script-src
+    Violations: 1
+    Documents: =>Springtimesoft\CSPSuite\Models\CSPDocument.oldDoc
+    UserAgents: =>Springtimesoft\CSPSuite\Models\CSPUserAgent.oldUA
+  old2:
+    ReportedTime: '2020-01-02 00:00:00'
+    Disposition: enforce
+    BlockedURI: https://evil.example.com/old-2.js
+    EffectiveDirective: script-src
+    Violations: 1
+    Documents: =>Springtimesoft\CSPSuite\Models\CSPDocument.oldDoc
+    UserAgents: =>Springtimesoft\CSPSuite\Models\CSPUserAgent.oldUA
+  old3:
+    ReportedTime: '2020-01-03 00:00:00'
+    Disposition: enforce
+    BlockedURI: https://evil.example.com/old-3.js
+    EffectiveDirective: script-src
+    Violations: 1
+    Documents: =>Springtimesoft\CSPSuite\Models\CSPDocument.oldDoc
+    UserAgents: =>Springtimesoft\CSPSuite\Models\CSPUserAgent.oldUA
+  recent:
+    ReportedTime: '2026-07-15 09:00:00'
+    Disposition: enforce
+    BlockedURI: https://evil.example.com/recent.js
+    EffectiveDirective: script-src
+    Violations: 1
+    Documents: =>Springtimesoft\CSPSuite\Models\CSPDocument.recentDoc
+    UserAgents: =>Springtimesoft\CSPSuite\Models\CSPUserAgent.recentUA

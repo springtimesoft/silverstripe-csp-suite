@@ -1,6 +1,6 @@
 <?php
 
-namespace Springtimesoft\CspSuite\Middleware;
+namespace Springtimesoft\CSPSuite\Middleware;
 
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Middleware\HTTPMiddleware;

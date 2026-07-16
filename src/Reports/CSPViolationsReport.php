@@ -3,6 +3,7 @@
 namespace Springtimesoft\CSPSuite\Reports;
 
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Reports\Report;
 use Springtimesoft\CSPSuite\GridFieldComponents\ClearAllCSPViolationsAction;
 use Springtimesoft\CSPSuite\Models\CSPViolation;
@@ -13,6 +14,8 @@ use Springtimesoft\CSPSuite\Models\CSPViolation;
  */
 class CSPViolationsReport extends Report
 {
+    private static $limit_count_in_overview = 100;
+
     public function title()
     {
         return _t(__CLASS__ . '.TITLE', 'CSP violations');
@@ -32,7 +35,7 @@ class CSPViolationsReport extends Report
 
     public function sourceRecords($params = [], $sort = null, $limit = null)
     {
-        return CSPViolation::get()->eagerLoad('Documents');
+        return CSPViolation::get()->eagerLoad('Documents', 'UserAgents');
     }
 
     public function getReportField()
@@ -43,6 +46,19 @@ class CSPViolationsReport extends Report
         $gridConfig->addComponents([
             new ClearAllCSPViolationsAction(),
             new GridFieldDeleteAction(),
+        ]);
+
+        /** @var GridFieldExportButton $exportField */
+        $exportField = $gridConfig->getComponentByType(GridFieldExportButton::class);
+        $exportField->setExportColumns([
+            'ReportedTime',
+            'Disposition',
+            'SourceFile',
+            'BlockedURI',
+            'DocumentURIList',
+            'EffectiveDirective',
+            'UserAgentList',
+            'Violations'
         ]);
 
         return $gridField;

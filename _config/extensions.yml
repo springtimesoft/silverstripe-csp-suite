@@ -1,8 +1,18 @@
 ---
-Name: springtimesoft-csp-suite-extensions
+Name: springtimesoft-csp-suite-siteconfig-extension
 ---
 
 # Adds CSP mode to Settings area in CMS
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - Springtimesoft\CSPSuite\Extensions\CSPSiteConfigExtension
+
+---
+Name: springtimesoft-csp-suite-queued-export-extension
+Only:
+  moduleexists: 'silverstripe/gridfieldqueuedexport'
+---
+
+Springtimesoft\CSPSuite\Reports\CSPViolationsReport:
+  extensions:
+    - Springtimesoft\CSPSuite\Extensions\CSPViolationsReportQueuedExportExtension
