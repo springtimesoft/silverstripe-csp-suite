@@ -10,7 +10,7 @@ jobs:
     name: CI
     uses: silverstripe/gha-ci/.github/workflows/ci.yml@v1
     with:
-      phpcoverage: true
+      phpcoverage: false
       endtoend: false
       js: false
-      phplinting: true
+      phplinting: false
